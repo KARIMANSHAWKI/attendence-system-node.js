@@ -2,6 +2,7 @@ const User = require("../models/User");
 const cryptPassword = require("../services/crypt-password");
 const decryptPassword = require("../services/decrypt-password");
 const getAccessToken = require("../services/access-token");
+const calcAge = require("../services/calc-age");
 
 // REGISTER
 const register = async (req, res) => {
@@ -10,6 +11,8 @@ const register = async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: cryptPassword(req.body.password),
+      address: req.body.address,
+      age: calcAge(req.body.birthDate)
     });
 
     const user = await newUser.save();

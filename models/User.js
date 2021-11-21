@@ -11,6 +11,10 @@ const UserSchema = new mongoose.Schema(
     },
     isSubadmin: { type: Boolean, default: false },
     isVerified: { type: Boolean, default: false },
+    code: { type: Number},
+    address: { type: String, required: true},
+    age: { type: Number, required: true}
+
   },
   { timestamps: true }
 );
