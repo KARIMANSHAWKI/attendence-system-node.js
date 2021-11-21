@@ -1,0 +1,27 @@
+{
+  "name": "attendence-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KARIMANSHAWKI/attendence-system-node.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KARIMANSHAWKI/attendence-system-node.js/issues"
+  },
+  "homepage": "https://github.com/KARIMANSHAWKI/attendence-system-node.js#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "mongoose": "^6.0.13",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}
