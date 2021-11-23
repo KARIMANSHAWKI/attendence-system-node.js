@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const MonthlyReportSchema = new mongoose.Schema(
   {
@@ -7,6 +8,11 @@ const MonthlyReportSchema = new mongoose.Schema(
     absenceTimes: { type: Number, default: 0 },
     excuseTimes: { type: Number, default: 0 },
     lateTimes: { type: Number, default: 0 },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+
   },
   { timestamps: true }
 );
