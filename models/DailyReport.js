@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const DailyReportSchema = new mongoose.Schema(
   {
-    date: { type: Date, required: true },
-    attendanceTime: { type: Number, default: "none" },
+    dateTime: { type: Date, required: true },
+    attendanceTime: { type: String, default: ''},
     absence: { type: Boolean, default: false },
-    excuseTime: { type: Date, default: "none" },
-    lateTime: { type: Date, default: "none" },
+    excuseTime: { type: Date, default: 0 },
+    lateTime: { type: Date, default: null },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
