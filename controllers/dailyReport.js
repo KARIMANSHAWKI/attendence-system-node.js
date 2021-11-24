@@ -10,7 +10,7 @@ const takeAttendance = async (req, res) => {
   afterTime = moment("8:00:00", format);
   let dailyReport = " ";
 
-  if (!time.isBetween(beforeTime, afterTime)) {
+  if (time.isBetween(beforeTime, afterTime)) {
     try {
       dailyReport = await new DailyReport({
         dateTime: new Date(),
@@ -54,17 +54,20 @@ const requestExcuse = async (req, res) => {
   beforeTime = moment("10:00:00", format);
   afterTime = moment("10:30:00", format);
   let dailyReport = "";
-  if (time.isBetween(beforeTime, afterTime)) {
+  if (!time.isBetween(beforeTime, afterTime)) {
     try {
       dailyReport =  new DailyReport({
         dateTime: new Date(),
         excuseTime: req.body.excuseTime,
         user: req.params.userId,
       });
+      // console.log("report");
       const report = await dailyReport.save();
       res.status(200).json(report);
 
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   } else {
     res.status(402).json({ error: "time is too late" });
   }

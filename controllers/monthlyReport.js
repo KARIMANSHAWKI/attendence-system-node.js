@@ -5,25 +5,91 @@ const DailyReport = require("../models/DailyReport");
 const monthlyReport = async (req, res) => {
   const d = new Date();
   const day = d.getUTCDate();
-  const thisMonth = new Date().getMonth()+1;
+  const currentMonth = new Date().getMonth() + 1;
+
   if (day !== 1) {
-    const attendanceTimes = await DailyReport.aggregate([
-      {
-        $project: {
-          _id: 0,
-          attendanceTimes: {  $dateToString: { format: "%m", date: "$dateTime" }  },
+      const attendanceTimes = await DailyReport.aggregate([
+        {
+          $match: { "attendanceTime": { $ne: '' } },
         },
-      },
-    //   { $match: { attendanceTime: { $ne: '' } } },
       {
         $group: {
-          _id: null,
-          attendanceTimesNum: { $sum: 1 },
+          _id: {
+            user: "$user",
+            month:{
+              $month: "$dateTime"
+            }
+          },
+          attendanceTimeNum: {$sum: 1}
         },
+      },
+      {
+        $match: {"_id.month": currentMonth }
+      }
+
+    ]);
+
+    const absenceTimes = await DailyReport.aggregate([
+      {
+        $match: { "absence": { $eq: true } },
+      },
+      {
+        $group: {
+          _id: {
+            user: "$user",
+            month:{
+              $month: "$dateTime"
+            }
+          },
+          absenceTimesNum: {$sum: 1}
+        },
+      },
+      {
+        $match: {"_id.month": currentMonth}
+      }
+
+    ]);
+
+    const lateTimes = await DailyReport.aggregate([
+      {
+        $match: { "lateTime": { $eq: null } },
+      },
+      {
+        $group: {
+          _id: {
+            user: "$user",
+            month: {
+              $month: "$dateTime",
+            },
+          },
+          lateTimeNum: { $sum: 1 },
+        },
+      },
+      {
+        $match: { "_id.month": currentMonth },
       },
     ]);
 
-    res.send(attendanceTimes);
+    const excuseTimes = await DailyReport.aggregate([
+      {$match: {"excuseTime": {$eq: null}}},
+      {
+        $group: {
+          _id: {
+            user: "$user",
+            month:{
+              $month: "$dateTime"
+            }
+          },
+          excuseTimesNum: {$sum: 1}
+        },
+      },
+      {
+      $match: {"_id.month": currentMonth}
+      }
+    ]);
+
+
+    res.json({attendanceTimes, absenceTimes, lateTimes})
   } else {
   }
 };

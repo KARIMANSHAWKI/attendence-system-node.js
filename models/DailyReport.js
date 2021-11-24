@@ -7,7 +7,7 @@ const DailyReportSchema = new mongoose.Schema(
     dateTime: { type: Date, required: true },
     attendanceTime: { type: String, default: ''},
     absence: { type: Boolean, default: false },
-    excuseTime: { type: Date, default: 0 },
+    excuseTime: { type: String, default: ''},
     lateTime: { type: Date, default: null },
     user: {
       type: Schema.Types.ObjectId,
