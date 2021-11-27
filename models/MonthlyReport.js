@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 
 const MonthlyReportSchema = new mongoose.Schema(
   {
-    date: { type: Date, required: true },
+    dateNow: { type: String, required: true },
     attendanceTimes: { type: Number, default: 0 },
     absenceTimes: { type: Number, default: 0 },
     excuseTimes: { type: Number, default: 0 },
     lateTimes: { type: Number, default: 0 },
+    month: { type: String, default: '' },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
